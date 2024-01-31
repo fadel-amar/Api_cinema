@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/class-diagram
+'skinparam classAttributeIconSize 0
+
+
+Class Salle {
+- idSalle : int
+- nom : chaine
+- nbPlaces : entier
+}
+
+
+Class Seance {
+- idSeance  : entier
+- dateProjection : dateTime
+- tarifNormal : entier
+- tarifReduit : entier
+}
+
+
+Class Film {
+- id : entier
+- titre : chaine
+- duree min : int
+}
+
+Class Users {
+- idUers : entier
+- email / username : chaine
+- motDePasse : chaine
+- roles : tableau
+}
+Class Reservation {
+- idReservation : entier
+- nbPlaceAReserver : entier
+- dateReservation : dateTime
+- montantTotal : entier
+}
+
+
+
+Seance "0..*" --> "1..1" Salle : est attribué >
+Film "1..1" --> "1..*" Seance : est projeté par >
+Users "0..*" --> "0..*" Reservation : réserve >
+Reservation "1..1" --> "1..1" Seance : concerne >
+@enduml
+
+
+
