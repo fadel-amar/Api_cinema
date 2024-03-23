@@ -23,6 +23,13 @@ class Reservation
     #[ORM\Column]
     private ?float $montantTotal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: Seance::class)]
+    private ?Seance $seance = null;
+
+
     public function getId(): ?int
     {
         return $this->id;

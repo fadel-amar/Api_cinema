@@ -25,15 +25,16 @@ Class Film {
 }
 
 Class Users {
-- idUers : entier
+- idUsers : entier
 - email / username : chaine
 - motDePasse : chaine
 - roles : tableau
 }
+
 Class Reservation {
 - idReservation : entier
-- nbPlaceAReserver : entier
-- dateReservation : dateTime
+- nbPlaceAReserver : entier++
+- dateReservat-ion : dateTime
 - montantTotal : entier
 }
 
@@ -41,9 +42,10 @@ Class Reservation {
 
 Seance "0..*" --> "1..1" Salle : est attribué >
 Film "1..1" --> "1..*" Seance : est projeté par >
-Users "0..*" --> "0..*" Reservation : réserve >
-Reservation "1..1" --> "1..1" Seance : concerne >
+Users "1..1" --> "0..*-" Reservation : réserve >
+Reservation "0..*" --> "1..1" Seance : concerne >
 @enduml
+
 
 
 

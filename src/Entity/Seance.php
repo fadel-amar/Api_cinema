@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SeanceRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +23,15 @@ class Seance
 
     #[ORM\Column]
     private ?float $tarifReduit = null;
+
+    #[ORM\OneToMany(mappedBy: 'seance', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
+    #[ORM\ManyToOne(targetEntity: Film::class)]
+    private $film;
+
+    #[ORM\ManyToOne(targetEntity: Salle::class)]
+    private $salle;
 
     public function getId(): ?int
     {

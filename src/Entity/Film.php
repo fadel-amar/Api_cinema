@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
@@ -18,6 +19,9 @@ class Film
 
     #[ORM\Column]
     private ?int $duree = null;
+
+    #[ORM\OneToMany(mappedBy: 'film', targetEntity: Seance::class)]
+    private Collection $seances;
 
     public function getId(): ?int
     {
