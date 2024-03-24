@@ -79,13 +79,23 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
+
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+
+        "unit-tests": "./vendor/bin/phpunit tests --color=always --testdox",
+        "it-tests": "./vendor/bin/phpunit --testsuite Integration --testdox --colors=always",
+        "updateDB" : "vendor/bin/doctrine orm:schema-tool:update --force",
+        "dropTable" : "vendor/bin/doctrine orm:schema-tool:drop --force",
+        "createShDB": "vendor/bin/doctrine orm:schema-tool:create"
     },
+
+
+
     "conflict": {
         "symfony/symfony": "*"
     },
