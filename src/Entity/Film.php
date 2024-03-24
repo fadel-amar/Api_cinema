@@ -33,11 +33,9 @@ class Film
         return $this->titre;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitre(string $titre): void
     {
         $this->titre = $titre;
-
-        return $this;
     }
 
     public function getDuree(): ?int
@@ -45,10 +43,22 @@ class Film
         return $this->duree;
     }
 
-    public function setDuree(int $duree): static
+    public function setDuree(int $duree): void
     {
         $this->duree = $duree;
-
-        return $this;
     }
+
+    public function addSeance(Seance $seance): void {
+        if (!$this->seances->contains($seance)) {
+            $this->seances->add($seance);
+            $seance->setFilm($this);
+        }
+    }
+
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+
 }

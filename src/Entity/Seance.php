@@ -28,10 +28,10 @@ class Seance
     private Collection $reservations;
 
     #[ORM\ManyToOne(targetEntity: Film::class)]
-    private $film;
+    private ?Film $film;
 
     #[ORM\ManyToOne(targetEntity: Salle::class)]
-    private $salle;
+    private ?Salle $salle;
 
     public function getId(): ?int
     {
@@ -43,11 +43,10 @@ class Seance
         return $this->dateProjection;
     }
 
-    public function setDateProjection(\DateTimeInterface $dateProjection): static
+    public function setDateProjection(\DateTimeInterface $dateProjection): void
     {
         $this->dateProjection = $dateProjection;
 
-        return $this;
     }
 
     public function getTarifNormal(): ?float
@@ -55,11 +54,9 @@ class Seance
         return $this->tarifNormal;
     }
 
-    public function setTarifNormal(float $tarifNormal): static
+    public function setTarifNormal(float $tarifNormal): void
     {
         $this->tarifNormal = $tarifNormal;
-
-        return $this;
     }
 
     public function getTarifReduit(): ?float
@@ -67,10 +64,53 @@ class Seance
         return $this->tarifReduit;
     }
 
-    public function setTarifReduit(float $tarifReduit): static
+    public function setTarifReduit(float $tarifReduit): void
     {
         $this->tarifReduit = $tarifReduit;
-
-        return $this;
     }
+
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilm()
+    {
+        return $this->film;
+    }
+
+    /**
+     * @param mixed $film
+     */
+    public function setFilm($film): void
+    {
+        $this->film = $film;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalle()
+    {
+        return $this->salle;
+    }
+
+    /**
+     * @param mixed $salle
+     */
+    public function setSalle($salle): void
+    {
+        $this->salle = $salle;
+    }
+    public function addReservation(Reservation $reservation): void
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setSeance($this);
+        }
+    }
+
 }

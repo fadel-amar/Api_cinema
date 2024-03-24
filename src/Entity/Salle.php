@@ -33,11 +33,9 @@ class Salle
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): void
     {
         $this->nom = $nom;
-
-        return $this;
     }
 
     public function getNbPlaces(): ?int
@@ -45,10 +43,23 @@ class Salle
         return $this->nbPlaces;
     }
 
-    public function setNbPlaces(int $nbPlaces): static
+    public function setNbPlaces(int $nbPlaces): void
     {
         $this->nbPlaces = $nbPlaces;
-
-        return $this;
     }
+
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): void
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances->add($seance);
+            $seance->setSalle($this);
+        }
+    }
+
+
 }

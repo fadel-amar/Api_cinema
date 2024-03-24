@@ -40,11 +40,10 @@ class Reservation
         return $this->nbPlacesAReserver;
     }
 
-    public function setNbPlacesAReserver(int $nbPlacesAReserver): static
+    public function setNbPlacesAReserver(int $nbPlacesAReserver): void
     {
         $this->nbPlacesAReserver = $nbPlacesAReserver;
 
-        return $this;
     }
 
     public function getDateReservation(): ?\DateTimeInterface
@@ -52,11 +51,10 @@ class Reservation
         return $this->dateReservation;
     }
 
-    public function setDateReservation(\DateTimeInterface $dateReservation): static
+    public function setDateReservation(\DateTimeInterface $dateReservation): void
     {
         $this->dateReservation = $dateReservation;
 
-        return $this;
     }
 
     public function getMontantTotal(): ?float
@@ -64,10 +62,31 @@ class Reservation
         return $this->montantTotal;
     }
 
-    public function setMontantTotal(float $montantTotal): static
+    public function setMontantTotal(float $montantTotal): void
     {
         $this->montantTotal = $montantTotal;
 
-        return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function getSeance(): ?Seance
+    {
+        return $this->seance;
+    }
+
+    public function setSeance(?Seance $seance): void
+    {
+        $this->seance = $seance;
+    }
+
+
 }
