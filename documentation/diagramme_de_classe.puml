@@ -18,12 +18,6 @@ Class Seance {
 }
 
 
-Class Film {
-- id : entier
-- titre : chaine
-- duree min : int
-}
-
 Class Users {
 - idUsers : entier
 - email / username : chaine
@@ -38,10 +32,16 @@ Class Reservation {
 - montantTotal : entier
 }
 
+Class Film {
+- id : entier
+- titre : chaine
+- duree min : int
+}
+
 
 
 Seance "0..*" --> "1..1" Salle : est attribué >
-Film "1..1" --> "1..*" Seance : est projeté par >
+Film "1..1" <-- "1..*" Seance : projete <
 Users "1..1" --> "0..*-" Reservation : réserve >
 Reservation "0..*" --> "1..1" Seance : concerne >
 @enduml

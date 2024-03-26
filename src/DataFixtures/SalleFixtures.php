@@ -17,7 +17,7 @@ class SalleFixtures extends Fixture
         $faker = Factory::create("fr_FR");
 
         // Créer 15 Salles
-        for ($i=0; $i<15; $i++) {
+        for ($i=0; $i<5; $i++) {
 
             $salle = new Salle();
 

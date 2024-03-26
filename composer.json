@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
         "fakerphp/faker": "^1.23",
+        "nelmio/api-doc-bundle": "^4.24",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.25",
         "symfony/asset": "6.4.*",
@@ -89,9 +90,7 @@
 
         "unit-tests": "./vendor/bin/phpunit tests --color=always --testdox",
         "it-tests": "./vendor/bin/phpunit --testsuite Integration --testdox --colors=always",
-        "updateDB" : "vendor/bin/doctrine orm:schema-tool:update --force",
-        "dropTable" : "vendor/bin/doctrine orm:schema-tool:drop --force",
-        "createShDB": "vendor/bin/doctrine orm:schema-tool:create"
+        "updateDB" : "vendor/bin/doctrine orm:schema-tool:update --force"
     },
 
 

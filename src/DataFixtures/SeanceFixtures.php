@@ -24,6 +24,10 @@ class SeanceFixtures extends Fixture
 
         //initialiser Faker
         $faker = Factory::create("fr_FR");
+        $films = $this->filmRepository->findAll();
+        $salles = $this->salleRepository->findAll();
+
+
 
         // Créer 15 Seances
         for ($i=0; $i<15; $i++) {
@@ -34,14 +38,11 @@ class SeanceFixtures extends Fixture
             $seance->setTarifNormal($tarifNormal);
             $seance->setTarifReduit($faker->randomFloat(2, 5, $tarifNormal - 1));
 
-            $films = $this->filmRepository->findAll();
             $film = $faker->randomElement($films);
             $seance->setFilm($film);
 
-            $salles = $this->salleRepository->findAll();
             $salle = $faker->randomElement($salles);
             $seance->setSalle($salle);
-
 
 
             $manager->persist($seance);
