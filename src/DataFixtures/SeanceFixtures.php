@@ -33,7 +33,7 @@ class SeanceFixtures extends Fixture
         for ($i=0; $i<15; $i++) {
 
             $seance = new Seance();
-            $seance->setDateProjection($faker->dateTimeBetween('-1 year', 'now'));
+            $seance->setDateProjection($faker->dateTimeBetween('-1 month', '+1 month'));
             $tarifNormal = $faker->randomFloat(2, 8, 25);
             $seance->setTarifNormal($tarifNormal);
             $seance->setTarifReduit($faker->randomFloat(2, 5, $tarifNormal - 1));

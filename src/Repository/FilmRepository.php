@@ -2,8 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Film;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Film;
+use App\Entity\Seance;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,22 @@ class FilmRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Film::class);
+    }
+
+    /**
+     * @return Film[] Returns an array of Film objects
+     */
+    public function findAllFilmsAffiches(): array
+    {
+        return $this->createQueryBuilder('film')
+            ->select('DISTINCT film')
+            ->from('App\Entity\Film', 'f')
+            ->innerJoin('App\Entity\Seance', 's', 'WITH', 's.film = film')
+            ->andWhere('s.dateProjection  >= :now')
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 //    /**

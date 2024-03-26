@@ -6,6 +6,7 @@ use App\Repository\SeanceRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SeanceRepository::class)]
 class Seance
@@ -15,6 +16,7 @@ class Seance
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['show_film'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateProjection = null;
 
