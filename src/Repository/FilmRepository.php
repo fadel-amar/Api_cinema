@@ -38,6 +38,25 @@ class FilmRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return Film[] Returns an array of Film objects
+     */
+    public function findFilmDateProjectionAsc($id) :array
+    {
+        return $this->createQueryBuilder('film')
+            ->select('DISTINCT film')
+            ->from('App\Entity\Film', 'f')
+            ->innerJoin('App\Entity\Seance', 's', 'WITH', 's.film = film')
+            ->andWhere('s.dateProjection  >= :now')
+            ->addOrderBy('s.dateProjection', 'ASC')
+             ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
 //    /**
 //     * @return Film[] Returns an array of Film objects
 //     */
