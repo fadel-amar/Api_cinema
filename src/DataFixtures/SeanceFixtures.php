@@ -30,7 +30,7 @@ class SeanceFixtures extends Fixture
 
 
         // Créer 15 Seances
-        for ($i=0; $i<15; $i++) {
+        for ($i=0; $i<20; $i++) {
 
             $seance = new Seance();
             $seance->setDateProjection($faker->dateTimeBetween('-1 month', '+1 month'));
@@ -44,9 +44,7 @@ class SeanceFixtures extends Fixture
             $salle = $faker->randomElement($salles);
             $seance->setSalle($salle);
 
-
             $manager->persist($seance);
-
 
         }
 

@@ -23,13 +23,7 @@ class FilmFixtures extends Fixture
             $film = new Film();
             $film->setTitre($faker->movie);
 
-            $duree = $faker->runtime;
-
-            list($heures, $minutes, $secondes) = explode(":", $duree);
-
-            $dureeFormat = ($heures * 60) + $minutes;
-
-            $film->setDuree($dureeFormat);
+            $film->setDuree(random_int(80, 150));
             $manager->persist($film);
         }
 
