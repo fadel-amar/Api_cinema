@@ -49,7 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      #[Assert\Regex(
          pattern: "^(?=.*[\w])(?=.*\d)([@$!%*?&]){6,}$",
          message: "Le mot de passe doit obligatoirement contenir au moins 1 Majuscule ou minuscule et 1 chiffre et 6 caractères"
-
      )]
     private ?string $password = null;
 
