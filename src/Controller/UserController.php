@@ -4,14 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Film;
 use App\Entity\User;
+use App\UserStories\creerUser\Register;
+use App\UserStories\creerUser\RegisterRequest;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use \Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ValidatorBuilder;
+use Doctrine\ORM\EntityManagerInterface;
+use function PHPUnit\Framework\throwException;
 
 
 class UserController extends AbstractController
@@ -29,13 +33,18 @@ class UserController extends AbstractController
             )
         ]
     )]
-    public function index(Request $request, SerializerInterface $serializer): Response
+    public function index(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
     {
         $bodyRequest = $request->getContent();
         $parameters = json_decode($request->getContent(), true);
 
+        if (!isset($parameters->email) && !isset($parameters->password) && !isset($parameters->confirmPassword) ) {
+            throw new \Exception("Il manque des données");
+        }
 
 
+        $validateur = (new ValidatorBuilder())->enableAttributeMapping()->getValidator();
+        $request = new Register($entityManager , $validateur).
 
 
 

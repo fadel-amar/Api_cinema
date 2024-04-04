@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Register {
+
     private EntityManagerInterface $entityManager;
     private ValidatorInterface $validateur;
 
@@ -21,10 +22,13 @@ class Register {
     }
 
 
+    /**
+     * @throws \Exception
+     */
     public function execute(RegisterRequest $requete): bool
     {
 
-       /* // Valider les données en entrées (de la requête)
+        // Valider les données en entrées (de la requête)
         $problemes = $this->validateur->validate($requete);
 
         if (count($problemes) > 0) {
@@ -37,33 +41,27 @@ class Register {
         }
 
 
-        $adherent = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $requete->email]);
-        if ($adherent != null) {
-            throw new \Exception("L'email est déjà attribué à un adherent");
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $requete->email]);
+        if ($user != null) {
+            throw new \Exception("L'email est déjà attribué à un utilisateur");
         }
 
-        // Générer un numéro d'adhérent au format AD-999999
-        $numeroAdherent = $this->generateurNumeroAdherent->generer();
-
-        $getNumeroAdherent = $this->entityManager->getRepository(Adherent::class)->findOneBy(['numero_adherent' => $numeroAdherent]);
-        if ($getNumeroAdherent != null) {
-            throw new \Exception("Le numero adherent existe déjà");
+        if ($requete->password != $requete->confirmPassword) {
+            throw new \Exception("Le deux mots de passe sont pas identiques");
         }
 
-        // Créer l'adhérent
-        $adherent = new Adherent();
-        $adherent->setNumeroAdherent($numeroAdherent);
-        $adherent->setEmail($requete->email);
-        $adherent->setNom($requete->nom);
-        $adherent->setPrenom($requete->prenom);
-        $adherent->setDateAdhesion(new \DateTime());
+        // Créer l'utilisateur
+        $user = new User();
+        $user->setEmail($requete->email);
+        $user->setPassword($requete->password);
 
-        // Enregistrer l'adhérent en base de données
-        $this->entityManager->persist($adherent);
+
+        // Enregistrer l'utilisateur dans la base de données
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
 
         return true;
-    }*/
+    }
 
 
 
