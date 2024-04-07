@@ -16,8 +16,10 @@ use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ValidatorBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use function PHPUnit\Framework\throwException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
+#[Route('/api')]
 class UserController extends AbstractController
 {
     #[Route('/register', name: 'register_user', methods: ['POST'])]
@@ -33,25 +35,39 @@ class UserController extends AbstractController
             )
         ]
     )]
-    public function index(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $bodyRequest = $request->getContent();
         $parameters = json_decode($request->getContent(), true);
 
-        if (!isset($parameters->email) && !isset($parameters->password) && !isset($parameters->confirmPassword) ) {
+        if (!isset($parameters['email']) || !isset($parameters['password']) || !isset($parameters['confirmPassword'])) {
             throw new \Exception("Il manque des données");
         }
 
 
         $validateur = (new ValidatorBuilder())->enableAttributeMapping()->getValidator();
-        $request = new Register($entityManager , $validateur).
 
+        $requete = new RegisterRequest($parameters['email'], $parameters['password'], $parameters['confirmPassword']);
 
+        $register = new Register($entityManager, $validateur);
 
+        $resultat = $register->execute($requete, $passwordHasher);
 
-        return $this->render('register/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        try {
+
+            return new Response(
+                $serializer->serialize(['success' => true], 'json'),
+                Response::HTTP_CREATED,
+                ['content-type' => 'application/json']
+            );
+        } catch (\Exception $e) {
+            return new Response(
+                $serializer->serialize(['error' => $e->getMessage()], 'json'),
+                Response::HTTP_BAD_REQUEST,
+                ['content-type' => 'application/json']
+            );
+
+        }
+
     }
-
 }

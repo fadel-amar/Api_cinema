@@ -5,6 +5,8 @@ namespace App\UserStories\creerUser;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class Register {
 
@@ -25,7 +27,7 @@ class Register {
     /**
      * @throws \Exception
      */
-    public function execute(RegisterRequest $requete): bool
+    public function execute(RegisterRequest $requete, UserPasswordHasherInterface $passwordHasher): bool
     {
 
         // Valider les données en entrées (de la requête)
@@ -50,11 +52,19 @@ class Register {
             throw new \Exception("Le deux mots de passe sont pas identiques");
         }
 
+
         // Créer l'utilisateur
         $user = new User();
         $user->setEmail($requete->email);
-        $user->setPassword($requete->password);
+        $user->setRoles(['ROLE_USER']);
 
+        $hashedPassword = $passwordHasher->hashPassword(
+            $user,
+            $requete->password
+        );
+
+
+        $user->setPassword($hashedPassword);
 
         // Enregistrer l'utilisateur dans la base de données
         $this->entityManager->persist($user);

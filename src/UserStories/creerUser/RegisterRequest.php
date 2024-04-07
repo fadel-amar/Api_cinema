@@ -13,7 +13,7 @@ class RegisterRequest {
 
     #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
     #[Assert\Regex(
-        pattern: "^(?=.*[\w])(?=.*\d)([@$!%*?&]){6,}$",
+        pattern: "/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{6,}$/",
         message: "Le mot de passe doit obligatoirement contenir au moins 1 Majuscule ou minuscule et 1 chiffre et 6 caractères"
     )]
     public string $password;
