@@ -27,31 +27,33 @@ class Register {
     /**
      * @throws \Exception
      */
-    public function execute(RegisterRequest $requete, UserPasswordHasherInterface $passwordHasher): bool
+    public function execute(RegisterRequest $requete, UserPasswordHasherInterface $passwordHasher)
     {
 
         // Valider les données en entrées (de la requête)
         $problemes = $this->validateur->validate($requete);
+        $errors = [];
 
         if (count($problemes) > 0) {
-            $messagesErreur = [];
+
             foreach ($problemes as $probleme) {
-                $messagesErreur[] =  $probleme->getMessage();
+                $errors[] =  $probleme->getMessage();
             }
-
-            throw new \Exception(implode("<br\>", $messagesErreur));
         }
-
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $requete->email]);
         if ($user != null) {
-            throw new \Exception("L'email est déjà attribué à un utilisateur");
+            $errors[]  = "L'email est déjà attribué à un utilisateur";
+            return $errors;
         }
 
         if ($requete->password != $requete->confirmPassword) {
-            throw new \Exception("Le deux mots de passe sont pas identiques");
+            $errors[]  = "Le deux mots de passe sont pas identiques";
         }
 
+        if(!empty($errors)) {
+            return $errors;
+        }
 
         // Créer l'utilisateur
         $user = new User();

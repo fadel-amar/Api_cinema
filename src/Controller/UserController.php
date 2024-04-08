@@ -41,7 +41,11 @@ class UserController extends AbstractController
         $parameters = json_decode($request->getContent(), true);
 
         if (!isset($parameters['email']) || !isset($parameters['password']) || !isset($parameters['confirmPassword'])) {
-            throw new \Exception("Il manque des données");
+            return new Response(
+                $serializer->serialize(['error' => "Il manque des données"], 'json'),
+                Response::HTTP_BAD_REQUEST,
+                ['content-type' => 'application/json']
+            );
         }
 
 
@@ -53,21 +57,23 @@ class UserController extends AbstractController
 
         $resultat = $register->execute($requete, $passwordHasher);
 
-        try {
+        if ($resultat !== true) {
+            return new Response(
+                $serializer->serialize(['success' => false, $resultat], 'json'),
+                Response::HTTP_BAD_REQUEST,
+                ['content-type' => 'application/json']
+            );
+
+        } else {
 
             return new Response(
                 $serializer->serialize(['success' => true], 'json'),
                 Response::HTTP_CREATED,
                 ['content-type' => 'application/json']
             );
-        } catch (\Exception $e) {
-            return new Response(
-                $serializer->serialize(['error' => $e->getMessage()], 'json'),
-                Response::HTTP_BAD_REQUEST,
-                ['content-type' => 'application/json']
-            );
 
         }
+
 
     }
 }
