@@ -59,7 +59,7 @@ class UserController extends AbstractController
 
         if ($resultat !== true) {
             return new Response(
-                $serializer->serialize(['success' => false, $resultat], 'json'),
+                $serializer->serialize(['success' => false, 'errors' => $resultat], 'json'),
                 Response::HTTP_BAD_REQUEST,
                 ['content-type' => 'application/json']
             );

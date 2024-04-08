@@ -35,20 +35,25 @@ class Register {
         $errors = [];
 
         if (count($problemes) > 0) {
-
             foreach ($problemes as $probleme) {
-                $errors[] =  $probleme->getMessage();
+                if(str_contains($probleme->getMessage(), "email")) {
+                    $errors['email'] =  $probleme->getMessage();
+                    return $errors;
+                } else {
+                    $errors['password'] =  $probleme->getMessage();
+                    return $errors;
+                }
             }
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $requete->email]);
         if ($user != null) {
-            $errors[]  = "L'email est déjà attribué à un utilisateur";
+            $errors['email']  = "L'email est déjà attribué à un utilisateur";
             return $errors;
         }
 
         if ($requete->password != $requete->confirmPassword) {
-            $errors[]  = "Le deux mots de passe sont pas identiques";
+            $errors['password']  = "Le deux mots de passe sont pas identiques";
         }
 
         if(!empty($errors)) {
