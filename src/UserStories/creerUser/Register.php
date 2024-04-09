@@ -46,6 +46,17 @@ class Register {
             }
         }
 
+        if (!filter_var($requete->email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email']  = "L'email n'est pas valide";
+            return $errors;
+        }
+
+        if ($requete->email) {
+            $errors['email']  = "L'email est déjà attribué à un utilisateur";
+            return $errors;
+        }
+
+
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $requete->email]);
         if ($user != null) {
             $errors['email']  = "L'email est déjà attribué à un utilisateur";
