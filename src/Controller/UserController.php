@@ -42,7 +42,7 @@ class UserController extends AbstractController
 
         if (!isset($parameters['email']) || !isset($parameters['password']) || !isset($parameters['confirmPassword'])) {
             return new Response(
-                $serializer->serialize(['error' => "Il manque des données"], 'json'),
+                $serializer->serialize(['error' => "Il manque des donnees"], 'json'),
                 Response::HTTP_BAD_REQUEST,
                 ['content-type' => 'application/json']
             );

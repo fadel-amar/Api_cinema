@@ -6,20 +6,23 @@ use App\Repository\SeanceRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Film;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SeanceRepository::class)]
 class Seance
 {
+
+    #[Groups(['show_film','show_reservations'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['show_film'])]
+    #[Groups(['show_film','show_reservations'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateProjection = null;
-
+    #[Groups(['show_reservations'])]
     #[ORM\Column]
     private ?float $tarifNormal = null;
 
@@ -29,9 +32,11 @@ class Seance
     #[ORM\OneToMany(mappedBy: 'seance', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[Groups(['show_reservations'])]
     #[ORM\ManyToOne(targetEntity: Film::class)]
     private ?Film $film;
 
+    #[Groups(['show_reservations'])]
     #[ORM\ManyToOne(targetEntity: Salle::class)]
     private ?Salle $salle;
 

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use App\Entity\Seance;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,17 @@ class ReservationRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Reservation::class);
+    }
+
+    public function countPlaceReservationsForSeance(Seance $seance): int
+    {
+        $query = $this->createQueryBuilder('r')
+            ->select('SUM(r.nbPlacesAReserver)')
+            ->where('r.seance = :seance')
+            ->setParameter('seance', $seance)
+            ->getQuery();
+
+        return (int) $query->getSingleScalarResult();
     }
 
 //    /**

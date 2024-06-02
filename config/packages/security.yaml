@@ -40,7 +40,7 @@ security:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS}
         - { path: ^/api/films, roles: PUBLIC_ACCESS}
-        - { path: ^/api/testLogin, roles: ROLE_USER }
+        - { path: ^/api/reservations, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

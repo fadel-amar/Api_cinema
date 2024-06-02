@@ -41,7 +41,7 @@ Class Film {
 
 
 Seance "0..*" --> "1..1" Salle : est attribué >
-Film "1..1" <-- "1..*" Seance : projete <
+Seance "1..*" --> "1..1" Film : projete >
 Users "1..1" --> "0..*-" Reservation : réserve >
 Reservation "0..*" --> "1..1" Seance : concerne >
 @enduml

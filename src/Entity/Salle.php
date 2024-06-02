@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SalleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
@@ -15,6 +16,8 @@ class Salle
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Groups('show_reservations')]
     #[ORM\Column(length: 160)]
     private ?string $nom = null;
 

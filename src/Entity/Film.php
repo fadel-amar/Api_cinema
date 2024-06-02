@@ -18,11 +18,11 @@ class Film
 
 
     #[ORM\Column(length: 255)]
-    #[Groups(['list_films','show_film'])]
+    #[Groups(['list_films','show_film', 'show_reservations'])]
     private ?string $titre = null;
 
     #[ORM\Column]
-    #[Groups(['list_films', 'show_film'])]
+    #[Groups(['list_films', 'show_film', 'show_reservations'])]
     private ?int $duree = null;
 
     #[Groups(['show_film'])]
