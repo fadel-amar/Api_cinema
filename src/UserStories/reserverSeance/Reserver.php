@@ -59,7 +59,7 @@ class Reserver
         $placesReservees = $this->entityManager->getRepository(Reservation::class)->countPlaceReservationsForSeance($seance);
         $placesDisponibles = $seance->getSalle()->getNbPlaces() - $placesReservees;
         if ($request->nbPlacesReserver > $placesDisponibles) {
-            $errors = "Il n'y a pas suffisamment de places disponibles pour cette seance.";
+            $errors = "Il n'y a pas suffisamment de places disponibles pour cette seance. il reste $placesDisponibles places";
             return $errors;
         }
 
